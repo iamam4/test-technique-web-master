@@ -20,7 +20,7 @@ function EquipmentList() {
             const equipmentList = data ? Object.keys(data).map(key => ({ id: key, ...data[key] })) : [];
             equipmentList.sort((a, b) => a.name.localeCompare(b.name));
             setEquipments(equipmentList);
-            setLoading(false); 
+            setLoading(false);
         });
 
         return () => unsubscribe();
@@ -31,10 +31,13 @@ function EquipmentList() {
         setCurrentPage(1);
     };
 
-    const filteredEquipments = equipments.filter(equipment =>
-        equipment.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        equipment.domain.toLowerCase().includes(searchTerm.toLowerCase())
+    const filteredEquipments = equipments.filter(equipment => 
+        Object.keys(equipment).some(key => 
+            equipment[key] && 
+            equipment[key].toString().toLowerCase().includes(searchTerm.toLowerCase())
+        )
     );
+    
 
     const totalPages = Math.ceil(filteredEquipments.length / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -56,7 +59,7 @@ function EquipmentList() {
                     <MdFirstPage className="w-5 h-5" />
                 </div>
                 <div className="flex">
-                    {currentPage} / {totalPages}
+                  {currentPage} / {totalPages}
                 </div>
                 <div
                     onClick={() => handlePageChange(currentPage + 1)}

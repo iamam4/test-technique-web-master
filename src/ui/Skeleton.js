@@ -1,6 +1,8 @@
 import React from 'react';
 
-const SkeletonLoader = () => (
+const SkeletonLoader = () => {
+
+  return (
   <div className="grid gap-10 lg:grid-cols-2">
     {Array.from({ length: 8 }).map((_, index) => (
       <div key={index} className="flex flex-col animate-pulse">
@@ -11,6 +13,7 @@ const SkeletonLoader = () => (
       </div>
     ))}
   </div>
-);
+  );
+}
 
 export default SkeletonLoader;
